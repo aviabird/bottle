@@ -1,0 +1,87 @@
+
+</br>
+<div class="jumbotron">
+	<h1><%= @action.title %></h1>
+	<b>Location</b>:  <%= @action.location %>
+</div>
+
+
+<div class= "container">
+	<span><blockquote><b>Description:</b>  <%= @action.description %></blockquote></span>
+</div>
+
+
+<h4><b>ACTION RECIPE</b>  <%=@action.action_recipe.title%></h4>
+<div class="container">
+	<ul class="list-group">
+		<%= for item <- @action.action_recipe.items do %>
+			<li class="well">
+			 	<span><%=item.description%></span>   
+			 	<span class="pull-right"><%=item.file_url%>
+			 	<%= link "-", to: action_path(@conn, :delete, @action.id, %{ item: item, recipe: 
+			 	@action.action_recipe}), class: "btn btn-danger pull-right", method: :delete %>
+			    </span>
+			</li>
+		<% end %>
+		<center>
+			<%# <button class="btn btn-primary" data-csrf="csrf_token" data-method="get" data-to="/item"
+			> + </button> %>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#itemModal"> + </button>
+		</center>
+	</ul>
+</div>
+
+<div class="modal fade" id="itemModal" role="dialog" >
+    <div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Create Item or select one from the public library</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+	      	<%= form_for @changeset, item_path(@conn, :create),[as: :item, id: "item-form"], fn f -> %>
+		        <div class="modal-body">
+			        <%= if @changeset.action do %>
+						<div id="form-error" class="alert alert-danger">
+							<p>Oops, something went wrong! Please check the errors below.</p>
+						</div>
+					<% end %>
+					<div class="form-group">
+						<label for="itemdropdown">Choose from library</label>
+			        	<select class="form-control" id="itemdropdown" >
+			        		<option disabled selected value> -- select an item -- </option>
+			        		<%= for item <- @items do %>
+		        				<option value=item.id><%= item.description %></option>
+			        		<% end %>
+			        	</select>
+			        </div>
+					<div class="form-group"> 
+						<%= label f, :description, class: "control-label" %>	 
+						<%= text_input f, :description, class: "form-control" %>	 
+						<%= error_tag f, :description %>
+					</div>
+					<%= hidden_input f, :action, value: @action.id %>
+					<div class="form-group">	 
+						<%= label f, :file_url, class: "control-label" %>	 
+						<%= text_input f, :file_url, class: "form-control" %>	 
+						<%= error_tag f, :file_url %>
+					</div>
+					<div class="form-check">	
+					    <%= checkbox f, :is_public %> 
+						<%= label f, :is_public, class: "control-label" %>	 
+						<%= error_tag f, :is_public %>
+					</div>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		          <%= submit "Save", class: "btn btn-primary"%>
+		        </div>
+	        <% end %>
+	    </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,38 @@
+</br>
+<div class="container">
+	<div class= "row">
+		<div class= "col-lg-7">
+			<h1>Create Item</h1>
+			<%= form_for @changeset, item_path(@conn, :create), [as:
+			:item, id: "item-form"], fn f -> %>
+				<%= if @changeset.action do %>
+				  <div id="form-error" class="alert alert-danger">
+					<p>Oops, something went wrong! Please check the errors
+					below.</p>
+				  </div>
+				<% end %>
+				<div class="form-group"> 
+					<%= label f, :description, class: "control-label" %>	 
+					<%= text_input f, :description, class: "form-control" %>	 
+					<%= error_tag f, :description %>
+				</div>
+				<div class="form-group">	 
+					<%= label f, :file_url, class: "control-label" %>	 
+					<%= text_input f, :file_url, class: "form-control" %>	 
+					<%= error_tag f, :file_url %>
+				</div>
+				<div class="form-group">	
+				    <%= checkbox f, :is_public %> 
+					<%= label f, :is_public, class: "control-label" %>	 
+					<%= error_tag f, :is_public %>
+				</div>
+				
+				<%= submit "Create Item", class: "btn btn-primary" %>
+			<% end %>
+		</div>
+		<div class= "col-lg-1"></div>
+		<div class= "col-lg-4">
+			<h1>Choose from the library</h1>
+		</div>
+	</div>
+</div>

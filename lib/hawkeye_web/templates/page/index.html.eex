@@ -1,0 +1,12 @@
+
+</br>
+<h1 class="page-title">Actions</h1>
+<div class="row">
+    <%= for action <- @actions do %>  
+	    <a href="<%=action_path(@conn, :show, action.id) %>">
+	      <div class="col-md-12">  
+	        <%= render HawkeyeWeb.ActioncardView, "action.html", conn: @conn, action: action %>    
+	      </div> 
+	    </a>
+    <% end %>
+</div>

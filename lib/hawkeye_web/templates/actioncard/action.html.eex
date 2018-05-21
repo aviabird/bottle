@@ -1,0 +1,20 @@
+<div class="product thumbnail">
+<div class="caption">
+ 
+	<span class="text-muted pull-right"><%= @action.title %></span>
+ 
+	<h2>
+ 
+		<div class=""><%= @action.description %></div>
+ 
+		<span class="pull-right">
+ 
+			<small class="">Location: <%= @action.location %>
+			</small>
+ 
+		</span>
+ 
+	</h2> 
+  	<hr/>
+  </div>
+</div>
